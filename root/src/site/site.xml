@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+    <bannerLeft>
+        <name>Visualisation</name>
+        <src>images/eiffel.png</src>
+        <href>https://eiffel.lmera.ericsson.se/</href>
+    </bannerLeft>
+    <bannerRight>
+        <src>images/logo.png</src>
+    </bannerRight>
+    <body>
+        <links>
+            <item href="https://eiffel.lmera.ericsson.se/com.ericsson.duraci/VisualizationEngineApp/" name="Home" />
+            <item name="Jenkins" href="https://eiffel.lmera.ericsson.se/jenkins/"/>
+            <item name="Nexus" href="https://eiffel.lmera.ericsson.se/nexus/"/>
+            <item name="GerritForge" href="http://gerritforge.lmera.ericsson.se/gerrit/"/>
+            <item name="JIRA" href="http://jira-oss.lmera.ericsson.se/"/>
+            <item name="Ericsson" href="http://www.ericsson.com"/>
+        </links>
+
+        <menu ref="reports" />
+
+    </body>
+</project>

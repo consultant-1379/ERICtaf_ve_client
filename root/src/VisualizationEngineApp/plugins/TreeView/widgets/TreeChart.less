@@ -1,0 +1,36 @@
+.eaVEApp-wTreeChart-svgArea {
+    height: 90%;
+    text-align: center;
+
+    .node rect {
+        fill: #ebebeb;
+    }
+
+    .node[data-result="SUCCESS"] rect {
+        fill: #d0e3a2;
+    }
+
+    .node[data-result="FAILURE"] rect {
+        fill: #f4a6a3;
+    }
+
+    .node rect[data-action] {
+        cursor: pointer;
+    }
+
+    .node text {
+        font: 10px sans-serif;
+        pointer-events: none;
+    }
+
+    path.link {
+        fill: none;
+        stroke: #adadad;
+        stroke-width: 1px;
+    }
+}
+
+.eaVEApp-wTreeChart-treeChartArea {
+    overflow: hidden;
+    height: 100%;
+}

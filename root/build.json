@@ -1,0 +1,254 @@
+{
+    "properties": {
+        "buildDir": "target",
+        "optimizeDir": "$(buildDir)/optimized",
+        "packageDir": "$(buildDir)/package",
+        "sdkTools": "$(pathToSdk)/tools",
+        "testRunner": "$(sdkTools)/test/test-runner.js",
+        "node": "node",
+        "npm": {
+            "?os.platform=windows": "npm.cmd",
+            "?os.platform=unix": "npm"
+        },
+        "jscoverage": {
+            "?os.platform=windows": "$(sdkTools)/jscoverage/jscoverage.exe",
+            "?os.platform=unix": "$(sdkTools)/jscoverage/jscoverage"
+        },
+        "phantomjs": {
+            "?os.platform=windows": "$(sdkTools)/phantomjs/bin/phantomjs.exe",
+            "?os.platform=unix": "$(sdkTools)/phantomjs/bin/phantomjs"
+        },
+        "uglifyjs": "$(node) $(pathToSdk)/node_modules/uglify-js/bin/uglifyjs",
+        "rjs": "$(node) $(pathToSdk)/node_modules/requirejs/bin/r.js",
+        "jshint": "$(node) $(pathToSdk)/node_modules/jshint/bin/jshint",
+        "cssverify": "$(node) $(sdkTools)/cssverify/cssverify.js",
+        "name": "VisualizationEngineApp",
+        "title": "VisualizationEngineApp",
+        "version": "0.0.1",
+        "buildDate": "1 Jan 1970"
+    },
+
+    "defaultPhase": "compile",
+
+    "phases": {
+
+         "list": {
+            "execute": {
+                "command": "$(npm)",
+                "attributes": [
+                    "list"
+                ]
+            }
+        },
+
+        "clean": {
+            "delete": {
+                "target": "$(buildDir)"
+            }
+        },
+
+        "update-package-json": {
+            "mergeJson": {
+                "file": "package.json",
+                "json": {
+                    "name": "$(name)",
+                    "version": "$(version)"
+                }
+            }
+        },
+
+        "install-dependencies": {
+            "depends": ["update-package-json"],
+            "execute": {
+                "command": "$(npm)",
+                "attributes": [
+                    "install",
+                    "--force"
+                ]
+            }
+        },
+
+        "jshint": {
+            "execute": {
+                "command": "$(jshint)",
+                "attributes": [
+                    "src"
+                ]
+            }
+        },
+
+        "cssverify": {
+            "execute": {
+                "command": "$(cssverify)",
+                "attributes": [
+                    "--name",
+                    "$(name)"
+                ]
+            }
+        },
+
+        "analyze": {
+            "depends": [ "jshint", "cssverify" ]
+        },
+
+        "copy-test-files": {
+            "depends": ["install-dependencies"],
+            "copy": {
+                "from": [
+                    "test",
+                    "node_modules",
+                    "thirdparty",
+                    "config",
+                    "resources",
+                    "index.html"
+                ],
+                "to": "$(buildDir)/"
+            }
+        },
+
+        "copy-tools": {
+            "copy": {
+                "from": "$(sdkTools)/*",
+                "to": "$(buildDir)/_tools/"
+            }
+        },
+
+        "jscoverage": {
+            "execute": {
+                "command": "$(jscoverage)",
+                "attributes": [
+                    "src",
+                    "$(buildDir)/src",
+                    "--encoding=UTF-8"
+                ]
+            }
+        },
+
+        "prepare-tests": {
+            "depends": [
+                "copy-test-files",
+                "copy-tools",
+                "jscoverage"
+            ]
+        },
+
+        "test-unit": {
+            "depends": [ "prepare-tests" ],
+            "execute": {
+                "command": "$(phantomjs)",
+                "attributes": [
+                    "$(testRunner)",
+                    "--root $(buildDir)",
+                    "--reports $(buildDir)/reports/unit",
+                    "--type unit",
+                    "--title \"$(title)\""
+                ]
+            }
+        },
+
+        "test": {
+            "depends": [ "test-unit" ]
+        },
+
+        "optimize": {
+            "rjs": {
+                "name": "$(name)",
+                "config": {
+                    "dir": "$(optimizeDir)",
+                    "optimize": "uglify2",
+                    "mainConfigFile": "./config/require.config.js",
+                    "resources": "$(name)/resources",
+                    "paths": {
+                        "jscore": "empty:",
+                        "handlebars-1.0.0.beta.6": "empty:",
+                        "less-1.3.3": "empty:"
+                    },
+                    "stubModules": [
+                        "text",
+                        "template",
+                        "styles"
+                    ],
+                    "modules": [
+                        {
+                            "name": "$(optimizeDir)"
+                        }
+                    ]
+                }
+            }
+        },
+
+        "set-help-app-info": {
+            "replace": {
+                "target": "$(packageDir)/$(name)/help/appInfo.xml",
+                "replacements": [
+                    {
+                        "token": "{{version}}",
+                        "value": "$(version)"
+                    },
+                    {
+                        "token": "{{buildDate}}",
+                        "value": "$(buildDate)"
+                    }
+                ]
+            }
+        },
+
+
+        "copy-all": {
+           "copy": {
+                "from" : [
+                    "config/",
+                    "help/",
+                    "node_modules",
+                    "resources/",
+                    "src/",
+                    "thirdparty/",
+                    "index.html"
+                ],
+                "to": "$(packageDir)/$(name)/"
+            }
+        },
+
+        "compile": {
+            "depends": [
+                "clean",
+                "analyze",
+                "test",
+                "set-help-app-info",
+                "copy-all"
+
+            ]
+        },
+
+        "prepare-package-json": {
+            "depends": ["update-package-json"],
+            "copy": {
+                "from": "package.json",
+                "to": "$(packageDir)/"
+            }
+        },
+
+        "package": {
+            "depends": ["compile", "prepare-package-json"],
+            "execute": {
+                "command": "$(npm)",
+                "attributes": [
+                    "pack",
+                    "$(packageDir)"
+                ]
+            },
+            "copy": {
+                "from": "$(name)-$(version).tgz",
+                "to": "$(buildDir)/$(name)-$(version).tar.gz"
+            },
+
+            "delete": {
+                "target": "$(name)-$(version).tgz"
+            }
+        },
+        
+        "pre-push": {
+            "depends": ["jshint", "test"]
+        }
+    }
+}

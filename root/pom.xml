@@ -1,0 +1,197 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ericsson.duraci</groupId>
+        <artifactId>duraci-ve</artifactId>
+        <version>6.0.8-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.ericsson.duraci</groupId>
+    <artifactId>VisualizationEngineApp</artifactId>
+    <version>6.0.8-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>VisualizationEngineApp</name>
+
+    <properties>
+        <node.executable>/proj/gitadm100/tools/node/0.8.18/bin/node</node.executable>
+        <npm.executable>/proj/gitadm100/tools/node/0.8.18/bin/npm</npm.executable>
+        <uisdk.executable>node_modules/tools/src/cdt.js</uisdk.executable>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>d MMM yyyy</maven.build.timestamp.format>
+    </properties>
+	
+    
+     <dependencies>	
+     <!-- Enter your plug-in dependencies here dependency:copy-dependencies
+     
+		<dependency>
+			<groupId>com.ericsson.duraci</groupId>
+			<artifactId>ve-plugin-Tree</artifactId>
+			<version>1.0.5-SNAPSHOT</version>
+            <type>zip</type>
+		</dependency>
+        <dependency>
+			<groupId>com.ericsson.duraci</groupId>
+			<artifactId>ve-plugin-Template</artifactId>
+			<version>1.0.5-SNAPSHOT</version>
+            <type>zip</type>
+		</dependency> -->
+            
+    </dependencies>	
+    
+    
+    <build>
+		<plugins>	
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>   
+                        <id>cdt_config_proxy</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${node.executable}</executable>
+                            <arguments>
+                                <argument>${npm.executable}</argument>
+                                <argument>config</argument>
+                                <argument>set</argument>
+                                <argument>proxy</argument>
+                                <argument>null</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution> 
+                        <id>npm_install_tools</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${node.executable}</executable>
+                            <arguments>
+                                <argument>${npm.executable}</argument>
+                                <argument>install</argument>
+                                <argument>https://eiffel.lmera.ericsson.se/nexus/content/groups/public/com/ericsson/oss/uisdk/clientsdk/tools/1.0.61/tools-1.0.61.tar.gz</argument>
+                                <argument>--tmp</argument>
+                                <argument>${project.build.directory}/tmp</argument>
+                                <argument>--cache</argument>
+                                <argument>${project.build.directory}/tmp/.npm</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>                  
+					<execution>   
+                        <id>cdt_build_package</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${node.executable}</executable>
+                            <arguments>
+                                <argument>${uisdk.executable}</argument>
+                                <argument>build</argument>
+                                <argument>package</argument>
+								<argument>--no-color</argument>
+                                <argument>--prop-version</argument>
+                                <argument>${project.version}</argument>
+                                <argument>--prop-buildDate</argument>
+                                <argument>${timestamp}</argument>
+                                <argument>--prop-majorVersion</argument>
+                                <argument>${parsedVersion.majorVersion}</argument>
+                                <argument>--prop-namespace</argument>
+                                <argument>${project.artifactId}</argument>
+                                <argument>--prop-node</argument>
+                                <argument>${node.executable}</argument>
+                                <argument>--prop-npm</argument>
+                                <argument>${npm.executable}</argument>	
+                            </arguments>
+                        </configuration>
+                    </execution> 
+                </executions>		
+            </plugin>
+			 
+			 <!--<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>2.4.1</version>
+            <executions>
+                <execution>
+                    <id>default-clean</id>
+                    <configuration>
+                        <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                        <filesets>
+                            <fileset>
+                                <directory>target</directory>
+                                <excludes>
+                                    <exclude>**/*.tar.gz</exclude>
+									<exclude>*.tar.gz</exclude>                                 								
+                                </excludes>
+                                <followSymlinks>false</followSymlinks>
+                            </fileset>
+                        </filesets>
+                    </configuration>
+                    <phase>initialize</phase>
+                    <goals>
+                        <goal>clean</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin> -->
+		
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>build-helper-maven-plugin</artifactId>
+              <version>1.7</version>
+              <executions>
+                <execution>
+                    <phase>initialize</phase>
+                    <id>parse-version</id>
+                    <goals>
+                        <goal>parse-version</goal>
+                    </goals>
+                </execution>
+              
+                <execution>
+                  <id>attach_tgz</id>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                    <artifacts>
+                      <artifact>
+                        <file>${project.build.directory}/${project.name}-${project.version}.tar.gz</file>
+                        <type>tar.gz</type>
+                      </artifact>
+                    </artifacts>
+                  </configuration>
+                </execution>
+              </executions>			  
+            </plugin>
+          
+           <!-- Unpack dependency plugins -->
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack_plugins</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>unpack-dependencies</goal>
+                </goals>
+                <configuration>
+                    <excludeTypes>jar</excludeTypes>
+                    <overWrite>true</overWrite>
+                    <outputDirectory>${project.basedir}/src/VisualizationEngineApp/plugins</outputDirectory>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+    </build>
+</project>

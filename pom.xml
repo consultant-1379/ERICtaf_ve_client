@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.ericsson.duraci</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.63</version>
+	</parent>
+
+	<artifactId>duraci-ve</artifactId>
+	<version>6.0.8-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+    <properties>
+        <project-builder>edcifem_local</project-builder>
+        <ericsson.scm.url>scm:git:ssh://${project-builder}@gerritforge.lmera.ericsson.se:29418/duraci-ve</ericsson.scm.url>
+        <duraci.site.url>scp://eselivm2v422l.lmera.ericsson.se:/proj/edcifem/var/www/${project.groupId}</duraci.site.url>
+        <camel.version>2.11.1</camel.version>
+        <jersey.version>2.1</jersey.version>
+    </properties>
+
+    <url>https://eiffel.lmera.ericsson.se/${project.groupId}</url>
+
+	<modules>
+		<module>root</module>
+	</modules>
+	<build>
+		<pluginManagement>
+		<plugins>
+			<plugin>
+			<artifactId>maven-assembly-plugin</artifactId>
+			 
+				<configuration>
+				  <descriptors>
+					<descriptor>${project.basedir}/dist-file.xml</descriptor>
+				  </descriptors>
+				  <finalName>VisualizationEngineApp-${project.version}</finalName>
+				  <outputDirectory>${project.basedir}/root/target</outputDirectory> 
+				</configuration>
+			
+			</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<scm>
+		<developerConnection>${ericsson.scm.url}</developerConnection>
+		<connection>${ericsson.scm.url}</connection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>site</id>
+            <name>DURACI Documentation</name>
+            <url>${duraci.site.url}</url>
+        </site>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <!-- Use version in the site url for release builds -->
+                <duraci.site.url>scp://eselivm2v422l.lmera.ericsson.se:/proj/edcifem/var/www/${project.version}/${project.groupId}</duraci.site.url>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

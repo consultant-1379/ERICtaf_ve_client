@@ -1,0 +1,132 @@
+@ebBgColor_grey_40: #adadad;
+@boxRadius: 0px 0px 3px;
+@borderRadius: 0px 0px 0px 4px;
+
+.hover-outline {
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+.eaVEApp {
+    &-h1, &-heading {
+        font-family: 'EricssonCapitalTT';
+        font-weight: normal;
+        text-align: center;
+    }
+
+    &-content {
+        /* To make room for the system bar*/
+        padding-top: 40px;
+    }
+
+    &-viewContainer {
+        [class*="span"]:nth-child(n) {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+    }
+
+    &-view {
+        margin-bottom: 20px;
+        position: relative;
+
+        -moz-box-shadow: @boxRadius @ebBgColor_grey_40;
+        -webkit-box-shadow: @boxRadius @ebBgColor_grey_40;
+        box-shadow: @boxRadius @ebBgColor_grey_40;
+        -moz-border-radius: @borderRadius;
+        -webkit-border-radius: @borderRadius;
+        border-radius: @borderRadius;
+
+        &:hover {
+            .hover-outline;
+        }
+    }
+}
+
+// In this style sheet any overwritten styles to change UI-sdk css is placed here
+
+.ebBtn {
+    position: inherit;
+}
+
+.ebDialog {
+    background: rgba(0,0,0,0.4);
+
+    // get around for ebDialog not scrollable UI-SDK should fix and then this can be removed.
+    &-holder {
+        position:fixed;
+        overflow:auto;
+        display:table-cell;
+        top:2%;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+    }
+}
+
+.ebLoader {
+    &_hidden {
+        display: none;
+    }
+}
+
+// Node CSS for colors ext.
+.nodebox {
+    fill: #fff;
+    stroke-width: 3.5px;
+}
+
+#node_PHYSICAL                  .nodebox { stroke: beige;}
+#node_PHYSICAL_HARD             .nodebox { stroke: tan;}
+#node_PHYSICAL_SOFT             .nodebox { stroke: yellow;}
+
+#node_BIOTA                     .nodebox { stroke: darkgreen;}
+#node_BIOTA_SPONGES             .nodebox { stroke: orange;}
+#node_BIOTA_ALGAE               .nodebox { stroke: green;}
+#node_BIOTA_ALGAE_CANOPY_ECK    .nodebox { stroke: lightgreen;}
+#node_BIOTA_ALGAE_CRUSTOSE      .nodebox { stroke: purple;}
+
+.nodeTitle {
+    font: 12px trebuchet ms;
+    font-weight: bold;
+    text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+}
+
+
+.nodeText {
+    font: 10px trebuchet ms;
+    text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+}
+
+.f1Text {
+    font: 10px trebuchet ms;
+    fill: red;
+    text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+}
+
+.link {
+    fill: none;
+    stroke: #999999;
+    stroke-width: 3.5px;
+}
+
+.SUCCESS {
+    fill: url(#gradient_success);
+}
+.UNKNOWN {
+    fill: url(#gradient_unknown);
+}
+.FAILURE {
+    fill: url(#gradient_failure);
+}
+
+.UNSTABLE {
+    fill: url(#gradient_unstable);
+}
+.undefined {
+    fill: url(#gradient_undefined);
+}
+.NOT_BUILT {
+    fill: url(#gradient_not_built);
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<concept id="VisualizationEngineApp-AppInfo">
+    <title>AppInfo</title>
+    <conbody>
+        <dl>
+            <dlentry id="appName">
+                <dt>App</dt>
+                <dd>VisualizationEngineApp</dd>
+            </dlentry>
+            <dlentry id="version">
+                <dt>Version</dt>
+                <dd>{{version}}</dd>
+            </dlentry>
+            <dlentry id="buildDate">
+                <dt>Build Date</dt>
+                <dd>{{buildDate}}</dd>
+            </dlentry>
+            <dlentry id="installDate">
+                <dt>Install Date</dt>
+                <dd>{{installDate}}</dd>
+            </dlentry>
+            <dlentry id="link">
+                <dt>App Link</dt>
+                <dd>/#VisualizationEngineApp</dd>
+            </dlentry>
+        </dl>
+    </conbody>
+</concept>

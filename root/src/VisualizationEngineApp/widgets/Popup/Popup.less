@@ -1,0 +1,45 @@
+@boxShadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+@borderRadius: 3px;
+
+.eaVEApp-wPopup {
+    position: absolute;
+
+    background-color: white;
+
+    border: 1px solid #999;
+    -webkit-border-radius: @borderRadius;
+    -moz-border-radius: @borderRadius;
+    -ms-border-radius: @borderRadius;
+    border-radius: @borderRadius;
+    -webkit-box-shadow: @boxShadow;
+    -moz-box-shadow: @boxShadow;
+    -ms-box-shadow: @boxShadow;
+    box-shadow: @boxShadow;
+    z-index: 99;
+    min-width: 200px;
+    max-height: 500px;
+    overflow: hidden;
+
+    &-logo {
+        float: left;
+        padding-top: 10px;
+    }
+
+    &-title {
+        float: left;
+        margin-top: -3px;
+    }
+
+    &-content {
+        color: #666;
+        line-height: 2rem;
+        overflow-x: hidden;
+        max-height: 460px;
+    }
+
+    &-close {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+}

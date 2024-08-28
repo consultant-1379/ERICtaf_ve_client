@@ -1,0 +1,39 @@
+@ebBgColor_grey_5: #f5f5f5;
+
+.eaVEApp-wListBuilder {
+    padding: 10px;
+
+    .ebNotification {
+        margin-top: 10px;
+    }
+
+    &-newListBuilder {
+
+        &-button, 
+        &-inputValidation {
+            display: inline-table;
+
+            .ebInput-status {
+                margin-top: 2px;
+            }
+        }
+    }
+
+    &-existingListBuilders {
+        padding: 10px 0px 0px 0px;
+
+        &-content {
+            position: relative;
+        }
+
+        &-list {
+            list-style: none;
+            margin: 0;
+            padding-left: 0;
+
+            li:nth-child(even) {
+                background-color: @ebBgColor_grey_5;
+            }
+        }
+    }
+}

@@ -1,0 +1,71 @@
+@transitionTime: .4s;
+
+.regionBar {
+    z-index: 98;
+    position: absolute;
+    height: 30px;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding-top: 5px;
+
+    background-image: -moz-linear-gradient(center top, rgb(255, 255, 255) 0%, rgb(244, 244, 244) 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, #f4f4f4));
+    background-image: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 100%);
+    background-image: -ms-linear-gradient(top, #ffffff 0%, #f4f4f4 100%);
+    background-image: linear-gradient(top bottom, #ffffff 0%, #f4f4f4 100%);
+
+    -moz-transition: opacity @transitionTime;
+    -webkit-transition: opacity @transitionTime;
+    transition: opacity @transitionTime;
+
+    opacity: 1;
+    overflow:hidden;
+    display:inline-block;
+
+    &-logo {
+        position:absolute;
+        height: 16px;
+    }
+
+    &-rightButton {
+        position:absolute;
+        height: 16px;
+        right:2px;
+        span {
+            margin: 1px 1px 10px 10px;
+        }
+    }
+
+    &-topMenuName {
+        position:absolute;
+        margin: 4px 0px 0px 30px;      
+        font-family: 'EricssonCapitalTT';
+        font-weight: normal;
+        font-size: 1.3rem;
+        color: rgb(0, 40, 94);
+
+        &-input {
+            margin-left: 20px;
+            float: left;
+            font-family: 'Courier New';
+        }
+
+        &-text {
+            margin-left: 20px;
+            float: left;
+            font-family: 'Courier New';
+            font-size: 16px;
+        }
+
+        &-icon {
+            margin-left: 20px;
+            float: left;
+        }
+    }
+}
+
+.ebTooltip {
+    font-family: 'Courier New';  
+}

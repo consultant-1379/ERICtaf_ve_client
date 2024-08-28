@@ -1,0 +1,56 @@
+@-webkit-keyframes blinker-w {  
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
+}
+
+@-moz-keyframes blinker-m {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+
+.blink {
+    -webkit-animation-name: blinker-w;  
+    -moz-animation-name: blinker-m;
+    -webkit-animation-iteration-count: infinite;  
+    -moz-animation-iteration-count: infinite;  
+    -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -moz-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    -webkit-animation-duration: 1s; 
+    -moz-animation-duration: 1s; 
+}
+
+.eaVEApp-wConnectionStatus {
+    position: absolute;
+    width: 80px;
+    top: 8px;
+    right: 10px;
+    padding: 2px;
+
+    &-connected {
+        padding-right: 2px;
+    }
+
+    &-connection-error {
+        padding-left: 3px;
+
+        &_blink {
+           .blink;
+        }
+    }
+
+    &-disconnected {
+        padding-left: 6px;
+
+        &_blink {
+            .blink;
+        }
+    }
+
+    .ebIcon_disabled {
+        cursor: auto;
+    }
+
+    .row-fluid [class*="span"] {
+        min-height: 0;
+    }
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eiffel Visualization Engine App</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script type="text/javascript" src="node_modules/jscore/require/require.js"></script>
+    <script type="text/javascript" src="config/require.config.js"></script>
+    <link rel="StyleSheet" type="text/css" href="resources/css/bootstrap.css">
+    <link rel="StyleSheet" type="text/css" href="resources/css/jquery-ui.css">
+    <link rel="StyleSheet" type="text/css" href="node_modules/branding/css/assets.css">
+    <link rel="StyleSheet" type="text/css" href="node_modules/branding/css/systemBar.css">
+    <script>
+        require(['VisualizationEngineApp/VisualizationEngineApp'], function (App) {
+            var currentApp = new App();
+            var container = document.getElementById('container');
+            container.innerHTML = '';
+            currentApp.start(container);
+        });
+    </script>
+</head>
+<body>
+<div id="container"></div>
+</body>
+</html>
